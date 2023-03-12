@@ -1,4 +1,4 @@
-# Strapi Headless CMS & Next.JS Blog
+# Strapi (v4) Headless CMS & Next.JS Blog
 
 This is a playground for Strapi CMS, and Next.JS Front-End sample code, wrapped in docker. The current Strapi blog examples are hard to get running without some intimate knowledge of NodeJS.
 
@@ -12,25 +12,47 @@ This is the easiest, and preferred way to run the sample.
 
 _Please Note: `--network=host` argument is **required** to ensure the frontend can talk to the backend. The frontend will not even start without this._
 
-### `build & run frontend`
+### `build & run backend`
 
 Working Directory `strapi-blog/backend`
 
 ```bash
-docker run build -t bsd-frontend .
+docker build -t bsd-backend .
 docker run -d --network=host bsd-backend:latest
 ```
 
 This will take some time, and you can watch the logs waiting for the startup.
 
-### `build & run backend`
+```bash
+docker logs --follow bsd-backend
+```
+
+You're looking for some output like
+
+```text
+...
+
+Welcome back!
+To manage your project 🚀, go to the administration panel at:
+http://0.0.0.0:1337/admin
+
+To access the server ⚡️, go to:
+http://0.0.0.0:1337
+
+...
+```
+
+### `build & run frontend`
 
 Wait for the backend to start fully, then run the front-end. This is important because part of the container initialization routine will issue an API call to Strapi.
 
 Working Directory `strapi-blog/frontend`
 
 ```bash
-docker run build -t bsd-frontend .
+# Build with the host network, so Strapi APIs are accessible at compile time, or build will fail
+docker build --network=host -t bsd-frontend .
+
+# Run with the host network, so Strapi APIs are accessible
 docker run -d --network=host bsd-frontend:latest
 ```
 

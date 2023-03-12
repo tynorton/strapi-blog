@@ -22,8 +22,7 @@ COPY docker-entrypoint.sh /usr/local/bin/
 
 RUN chmod 777 /usr/local/bin/docker-entrypoint.sh
 
-#ENTRYPOINT ["tail"]
-#CMD ["-f","/dev/null"]
+RUN yarn install
+RUN yarn build
 
 CMD ["docker-entrypoint.sh"]
-#CMD ["strapi"]
